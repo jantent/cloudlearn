@@ -1,4 +1,4 @@
-package com.servicehi;
+package com;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -17,11 +17,12 @@ public class ServiceHiApplication {
 		SpringApplication.run(ServiceHiApplication.class, args);
 	}
 
-	@Value("$server.port")
+	@Value("${server.port}")
 	String port;
 
 	@RequestMapping("/hi")
 	public String home(@RequestParam(value = "name", defaultValue = "forezp") String name){
+		System.out.println(port);
 		return "hi " + name + " ,i am from port:" + port;
 	}
 }
