@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: service-hi
+  thymeleaf:
+      prefix: classpath:/templates/
+      check-template-location: true
+      suffix: .html
+      encoding: UTF-8
+      mode: HTML5
+      cache: false
 
 eureka:
   client:
