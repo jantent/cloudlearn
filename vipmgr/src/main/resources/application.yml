@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: service-hi
+    name: vipmgr
   thymeleaf:
       prefix: classpath:/templates/
       check-template-location: true
