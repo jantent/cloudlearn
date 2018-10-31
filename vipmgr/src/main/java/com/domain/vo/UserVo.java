@@ -7,9 +7,13 @@ public class UserVo {
 
     private String userName;
 
-    private String userPassword;
+    private String account;
+
+    private Integer sex;
 
     private String phoneNumber;
+
+    private String userPassword;
 
     private String email;
 
@@ -33,12 +37,20 @@ public class UserVo {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword == null ? null : userPassword.trim();
+    public void setAccount(String account) {
+        this.account = account == null ? null : account.trim();
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     public String getPhoneNumber() {
@@ -47,6 +59,14 @@ public class UserVo {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
     public String getEmail() {

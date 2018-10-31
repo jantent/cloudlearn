@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>会员列表</title>
+    <link th:href="@{/css/layui.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+</head>
+<body class="child-body">
+
+<div class="child-nav">
+    <span class="layui-breadcrumb">
+         <a>会员管理</a>
+         <a><cite>会员列表</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新" style="float:right;margin-top: 3px"><i class="layui-icon layui-icon-refresh-3"></i></a>
+</div>
+
+<div class="layui-row">
+    <form  class="layui-form" th:action="@{/user/list}">
+        <div class="layui-form-item search-row">
+            <div class="layui-inline">
+                <label class="search-label">用户名</label>
+                <div class="search-input">
+                    <input type="text" name="username" class="layui-input" th:value="${user.userName}">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="search-label">性别</label>
+                <div class="search-input">
+                    <select name="gender">
+                        <option value=""></option>
+                        <option value="1" th:selected="${user.sex==1}">男</option>
+                        <option value="2" th:selected="${user.sex==2}">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="search-label">创建时间</label>
+                <div class="date-input">
+                    <input type="text" name="beginTime" class="layui-input time-item" th:value="${#dates.format(user.createdTime,'yyyy-MM-dd HH:mm:ss')}" placeholder="开始时间">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="date-input">
+                    <input type="text" name="endTime" class="layui-input time-item" th:value="${#dates.format(user.createdTime,'yyyy-MM-dd HH:mm:ss')}" placeholder="截止时间">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i>查询</button>
+            </div>
+            <div class="layui-inline">
+                <a href="/user/edit" type="button" class="layui-btn"><i class="layui-icon">&#xe608;</i>新增</a>
+            </div>
+        </div>
+        <input type="hidden" name="page" id="pg">
+        <input type="hidden" name="size" id="se">
+    </form>
+</div>
+
+<table class="layui-table" lay-filter="users">
+    <thead>
+    <tr>
+        <th lay-data="{field:'userName', sort:true}">用户名</th>
+        <th lay-data="{field:'account'}">账号</th>
+        <th lay-data="{field:'gender'}">性别</th>
+        <th lay-data="{field:'phoneNumber'}">手机</th>
+        <th lay-data="{field:'email'}">邮箱</th>
+        <th lay-data="{field:'createTime', sort:true}">创建时间</th>
+        <th lay-data="{field:'updateTime', sort:true}">修改时间</th>
+        <th lay-data="{field:'opt',fixed: 'right',align:'center',width:300}">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user:${userList}" >
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.account}"></td>
+        <td th:text="${#strings.equals(user.sex,'1')?'男':'女'}"></td>
+        <td th:text="${user.phoneNumber}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${#dates.format(user.createdTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${#dates.format(user.modifiedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td>
+            <a class="layui-btn layui-btn-xs model" th:attr="data-id=${user.uid}" href="javascript:void(0);"><i class="layui-icon iconfont icon-detail"></i>详情</a>
+            <a  class="layui-btn layui-btn-xs" th:attr="data-id=${user.uid}" th:href="@{'/user/edit/?userId='+${user.uid}}"><i class="layui-icon">&#xe642;</i>编辑</a>
+            <a  class="layui-btn layui-btn-danger layui-btn-xs remove" th:attr="data-id=${user.uid}" href="javascript:void(0);"><i class="layui-icon">&#xe640;</i>删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div id="pag"></div>
+<script th:src="@{/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['element','laypage','table','laydate'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laypage = layui.laypage,
+            laydate = layui.laydate;
+
+        /*<![CDATA[*/
+        var ct = [[${userList.total}]];
+        var cn = [[${userList.pageNum}]];
+        var ns = [[${userList.pageSize}]];
+        /*]]>*/
+
+        //转换静态表格
+        table.init('users', {
+            limit: ns //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+        });
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'pag', //注意，这里的ID，不用加 # 号
+            count:ct, //数据总数，从服务端得到
+            groups:10,
+            limit:ns,
+            // limits:[10, 20, 30, 40, 50],
+            curr:cn,
+            layout:['prev', 'page', 'next','skip','count','limit'],
+            jump: function(obj,first){
+                if(!first){
+                    $('#pg').val(obj.curr-1);
+                    $('#se').val(obj.limit);
+                    $('form').submit();
+                    // url+="?page="+(obj.curr-1)+"&size="+obj.limit;
+                    // window.location.href=url;
+                }
+            }
+        });
+
+        //执行一个laydate实例
+        //同时绑定多个
+        lay('.time-item').each(function(){
+            laydate.render({
+                elem: this,
+                type: 'datetime',
+                max:0,
+                trigger: 'click'
+            });
+        });
+
+        //删除处理
+        $(".remove").on('click', function () {
+            var _this = $(this);
+            layer.confirm('确定删除吗?',{title:'删除'}, function(){
+                $.getJSON('/sys/adminDel', {userId:_this.data('id')}, function(ret){
+                    if (ret.code == 200){
+                        // $('#'+_this.data('id')).hide();
+                        layer.msg(ret.msg, {icon: 1,time:600},function () {
+                            location.reload();
+                        });
+                    } else {
+                        layer.msg(ret.msg, {icon: 2,time:600});
+                    }
+                });
+            });
+        })
+
+        //详情窗口
+        $('.model').on('click',function () {
+            var _this = $(this);
+            layer.open({
+                type: 2 //Page层类型
+                ,skin: 'layui-layer-molv'
+                ,area: ['600px', '450px']
+                ,title: ['用户信息','font-size:18px']
+                ,shadeClose: true
+                ,shade: 0 //遮罩透明度
+                ,maxmin: true //允许全屏最小化
+                ,content:'/user/detail?userId='+_this.data('id')
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

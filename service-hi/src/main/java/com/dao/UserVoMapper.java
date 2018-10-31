@@ -3,8 +3,13 @@ package com.dao;
 import com.domain.vo.UserVo;
 import com.domain.vo.UserVoExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
+@Component
+@Mapper
 public interface UserVoMapper {
     long countByExample(UserVoExample example);
 

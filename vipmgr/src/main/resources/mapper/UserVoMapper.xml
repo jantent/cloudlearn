@@ -4,8 +4,10 @@
   <resultMap id="BaseResultMap" type="com.domain.vo.UserVo">
     <id column="uid" jdbcType="INTEGER" property="uid" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    uid, user_name, user_password, phone_number, email, created_time, modified_time
+    uid, user_name, account, sex, phone_number, user_password, email, created_time, modified_time
   </sql>
   <select id="selectByExample" parameterType="com.domain.vo.UserVoExample" resultMap="BaseResultMap">
     select
@@ -102,12 +104,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.domain.vo.UserVo">
-    insert into t_user (uid, user_name, user_password, 
-      phone_number, email, created_time, 
-      modified_time)
-    values (#{uid,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
-      #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{modifiedTime,jdbcType=TIMESTAMP})
+    insert into t_user (uid, user_name, account, 
+      sex, phone_number, user_password, 
+      email, created_time, modified_time
+      )
+    values (#{uid,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.domain.vo.UserVo">
     insert into t_user
@@ -118,11 +122,17 @@
       <if test="userName != null">
         user_name,
       </if>
-      <if test="userPassword != null">
-        user_password,
+      <if test="account != null">
+        account,
+      </if>
+      <if test="sex != null">
+        sex,
       </if>
       <if test="phoneNumber != null">
         phone_number,
+      </if>
+      <if test="userPassword != null">
+        user_password,
       </if>
       <if test="email != null">
         email,
@@ -141,11 +151,17 @@
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userPassword != null">
-        #{userPassword,jdbcType=VARCHAR},
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
       </if>
       <if test="phoneNumber != null">
         #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -173,11 +189,17 @@
       <if test="record.userName != null">
         user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
-      <if test="record.userPassword != null">
-        user_password = #{record.userPassword,jdbcType=VARCHAR},
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
       </if>
       <if test="record.phoneNumber != null">
         phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null">
+        user_password = #{record.userPassword,jdbcType=VARCHAR},
       </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
@@ -197,8 +219,10 @@
     update t_user
     set uid = #{record.uid,jdbcType=INTEGER},
       user_name = #{record.userName,jdbcType=VARCHAR},
-      user_password = #{record.userPassword,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
       phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      user_password = #{record.userPassword,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
@@ -212,11 +236,17 @@
       <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userPassword != null">
-        user_password = #{userPassword,jdbcType=VARCHAR},
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
       </if>
       <if test="phoneNumber != null">
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -233,8 +263,10 @@
   <update id="updateByPrimaryKey" parameterType="com.domain.vo.UserVo">
     update t_user
     set user_name = #{userName,jdbcType=VARCHAR},
-      user_password = #{userPassword,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
