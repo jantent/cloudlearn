@@ -72,6 +72,6 @@ public class UserService {
         }else {
             int result = userDao.insert(userVo);
         }
-        return RestResult.Success();
+        return RestResult.ok();
     }
 }

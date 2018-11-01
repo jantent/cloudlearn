@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>登录</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link th:href="@{/static/css/layui.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/static/css/main.css}">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.png"/>
+    <style>
+        .login {
+            height: 260px;
+            width: 260px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -150px 0 0 -150px;
+            z-index: 99;
+        }
+
+        .login h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form_code {
+            position: relative;
+        }
+
+        .form_code .code {
+            position: absolute;
+            right: 0;
+            top: 1px;
+            cursor: pointer;
+        }
+
+        .login_btn {
+            width: 50%;
+            margin-right: 10px
+        }
+    </style>
+</head>
+<body style="background:url(/static/images/f10.jpg) #000 no-repeat">
+<div class="login">
+    <h1>后台管理登录</h1>
+    <form class="layui-form" action="/admin/login" method="post">
+        <div class="layui-form-item">
+            <input class="layui-input" id="username" name="username" placeholder="用户名:admin" lay-verify="required"
+                   type="text" autocomplete="off"/>
+        </div>
+        <div class="layui-form-item">
+            <input class="layui-input" id="password" name="password" placeholder="" lay-verify="required"
+                   type="password" autocomplete="off"/>
+        </div>
+        <button class="layui-btn login_btn" lay-submit="" lay-filter="login">登录</button>
+    </form>
+</div>
+<script th:src="@{/static/layui.js}"></script>
+<script>
+    layui.use(['element', 'form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer;
+
+        form.on('submit(login)', function (data) {
+            var index = layer.load(0);
+            var headers = {};
+            $.ajax({
+                url: data.form.action,
+                type: data.form.method,
+                headers: headers,
+                data: data.field,//这是是要提交的参数
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.close(index);
+                        location.href = "/";
+                    } else {
+                        random($('#vdc')[0]);
+                        layer.close(index);
+                        layer.msg(data.msg, {time: 1000});
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
+
+    //跳出 iframe 框架
+    if (window != top)
+        top.location.href = location.href;
+
+</script>
+</body>
+</html>

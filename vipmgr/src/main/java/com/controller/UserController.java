@@ -19,7 +19,7 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/user")
-public class IndexController {
+public class UserController {
 
     @Resource
     private UserService userService;

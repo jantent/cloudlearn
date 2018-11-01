@@ -10,7 +10,7 @@ public class RestResult {
      * 成功返回
      * @return
      */
-    public static ModelMap Success() {
+    public static ModelMap ok() {
         ModelMap mp = new ModelMap();
         mp.put("code", RestCode.SUCCESS.code);
         mp.put("msg", RestCode.SUCCESS.msg);
@@ -21,7 +21,7 @@ public class RestResult {
     /**
      * 一般成功 统一返回
      */
-    public static ModelMap Success(Object obj) {
+    public static ModelMap ok(Object obj) {
         ModelMap mp = new ModelMap();
         mp.put("code", RestCode.SUCCESS.code);
         mp.put("msg", RestCode.SUCCESS.msg);
@@ -32,7 +32,7 @@ public class RestResult {
     /**
      * 自定义成功消息
      */
-    public static ModelMap Success(String msg, Object obj) {
+    public static ModelMap ok(String msg, Object obj) {
         ModelMap map = new ModelMap();
         map.put("code", RestCode.SUCCESS.code);
         map.put("msg", msg);
@@ -43,7 +43,7 @@ public class RestResult {
     /**
      * 自定义成功返回
      */
-    public static ModelMap Success(int code, String msg, Object obj){
+    public static ModelMap ok(int code, String msg, Object obj){
         ModelMap map = new ModelMap();
         map.put("code", code);
         map.put("msg", msg);
@@ -51,10 +51,17 @@ public class RestResult {
         return map;
     }
 
+    public static ModelMap fail(String msg){
+        ModelMap map = new ModelMap();
+        map.put("code", -1);
+        map.put("msg", msg);
+        return map;
+    }
+
     /**
      * 一般错误 统一返回
      */
-    public static ModelMap Error(RestCode restCode) {
+    public static ModelMap fail(RestCode restCode) {
         ModelMap map = new ModelMap();
         map.put("code", restCode.code);
         map.put("msg", restCode.msg);
@@ -64,7 +71,7 @@ public class RestResult {
     /**
      * 自定义错误信息
      */
-    public static ModelMap Error(int code, String msg) {
+    public static ModelMap fail(int code, String msg) {
         ModelMap mp = new ModelMap();
         mp.put("code", code);
         mp.put("msg", msg);
