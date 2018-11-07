@@ -1,9 +1,9 @@
 package com.controller;
 
-import com.domain.bo.LayRespBo;
 import com.domain.vo.UserVo;
 import com.github.pagehelper.PageInfo;
 import com.service.UserService;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +25,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/list")
-    public String list(HttpServletRequest request, @RequestParam(value = "limit", defaultValue = "10") int limit, @Valid UserVo user) {
-        PageInfo<UserVo> users = userService.searchAll(1, limit);
+    public String list(HttpServletRequest request, PageInfo pageInfo, @Valid UserVo user) {
+        PageInfo<UserVo> users = userService.searchAll(1, 5);
         request.setAttribute("userList", users.getList());
         request.setAttribute("user", user);
         return "usermgr";
