@@ -124,7 +124,7 @@
             layout: ['prev', 'page', 'next', 'skip', 'count', 'limit'],
             jump: function (obj, first) {
                 if (!first) {
-                    $('#pg').val(obj.curr - 1);
+                    $('#pg').val(obj.curr);
                     $('#se').val(obj.limit);
                     $('form').submit();
                 }
