@@ -24,8 +24,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/list")
-    public String list(HttpServletRequest request, @RequestParam(value = "page",defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "10") int size, @Valid UserVo user) {
-        PageInfo<UserVo> users = userService.searchAll(page, size);
+    public String list(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "10") int size, @Valid UserVo user) {
+
+        PageInfo<UserVo> users = userService.searchAll(page, size, user);
         request.setAttribute("userList", users.getList());
         request.setAttribute("user", user);
         return "usermgr";
@@ -52,6 +53,13 @@ public class UserController {
     @ResponseBody
     public ModelMap editSave(HttpServletRequest request, UserVo userVo) {
         ModelMap modelMap = userService.saveOne(userVo);
+        return modelMap;
+    }
+
+    @GetMapping(value = "/del")
+    @ResponseBody
+    public ModelMap del(HttpServletRequest request, @RequestParam Integer userId){
+        ModelMap modelMap = userService.delOne(userId);
         return modelMap;
     }
 }

@@ -22,9 +22,9 @@
             <form class="layui-form" action="/user/edit/save" method="post">
                 <input type="hidden" id="altId" name="id" th:value="${user.uid}">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
+                    <label class="layui-form-label">账号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" lay-verify="required" lay-vertype="tips" placeholder="请输入用户名" th:value="${user.userName}" autocomplete="off" class="layui-input">
+                        <input type="text" name="account" lay-verify="required" lay-vertype="tips" placeholder="请输入用户名" th:value="${user.account}" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux" th:if="${user.uid==null}"></div>
                 </div>
@@ -32,14 +32,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userPassword" placeholder="密码" th:value="${user.userPassword}" autocomplete="off" class="layui-input">
+                        <input type="password" name="userPassword" placeholder="密码" th:value="${user.userPassword}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">姓名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="account" placeholder="请输入用户名" th:value="${user.account}" autocomplete="off" class="layui-input">
+                        <input type="text" name="userName" placeholder="请输入用户名" th:value="${user.userName}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">

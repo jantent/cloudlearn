@@ -6,6 +6,7 @@ import com.domain.vo.UserVo;
 import com.domain.vo.UserVoExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -27,13 +28,32 @@ public class UserService {
     /**
      * 查询所有记录
      *
+     * 查询条件 ，手机账号，姓名，性别
      * @param p
      * @param limit
      * @return
      */
-    public PageInfo<UserVo> searchAll(Integer p, Integer limit) {
+    public PageInfo<UserVo> searchAll(Integer p, Integer limit,UserVo userVo) {
         UserVoExample example = new UserVoExample();
         example.setOrderByClause("created_time desc");
+        UserVoExample.Criteria criteria = example.createCriteria();
+
+        if (StringUtils.isNotBlank(userVo.getPhoneNumber())){
+            criteria.andPhoneNumberEqualTo(userVo.getPhoneNumber());
+        }
+
+        if (StringUtils.isNotBlank(userVo.getAccount())){
+            criteria.andAccountLike(userVo.getAccount());
+        }
+
+        if (StringUtils.isNotBlank(userVo.getUserName())){
+            criteria.andUserNameLike(userVo.getUserName());
+        }
+
+        if (null != userVo.getSex()){
+            criteria.andSexEqualTo(userVo.getSex());
+        }
+
         PageHelper.startPage(p, limit);
         List<UserVo> userVoList = userDao.selectByExample(example);
         PageInfo<UserVo> pageInfo = new PageInfo<>(userVoList);
@@ -72,6 +92,11 @@ public class UserService {
         }else {
             int result = userDao.insert(userVo);
         }
+        return RestResult.ok();
+    }
+
+    public ModelMap delOne(Integer uid){
+        userDao.deleteByPrimaryKey(uid);
         return RestResult.ok();
     }
 }

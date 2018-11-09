@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <title>会员列表</title>
+    <title>日志管理</title>
     <link th:href="@{/static/css/layui.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/static/css/public.css}">
     <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.png"/>
@@ -17,7 +17,7 @@
 <div class="child-nav">
     <span class="layui-breadcrumb">
          <a>会员管理</a>
-         <a><cite>会员列表</cite></a>
+         <a><cite>日志管理</cite></a>
     </span>
     <a class="layui-btn layui-btn-normal" href="javascript:location.replace(location.href);" title="刷新"
        style="float:right;margin-top: 3px"><i class="layui-icon layui-icon-refresh-3"></i></a>
@@ -27,32 +27,18 @@
     <form class="layui-form" th:action="@{/user/list}">
         <div class="layui-form-item search-row">
             <div class="layui-inline">
-                <label class="search-label">姓名</label>
+                <label class="search-label">IP地址</label>
                 <div class="search-input">
-                    <input type="text" name="userName" class="layui-input" th:value="${user.userName}">
+                    <input type="text" name="clientIp" class="layui-input" th:value="${loginfo.clientIp}">
                 </div>
 
-                <label class="search-label">手机号</label>
+                <label class="search-label">g管理员</label>
                 <div class="search-input">
-                    <input type="text" name="phoneNumber" class="layui-input" th:value="${user.phoneNumber}">
+                    <input type="text" name="who" class="layui-input" th:value="${loginfo.who}">
                 </div>
 
-                <label class="search-label">账号</label>
-                <div class="search-input">
-                    <input type="text" name="account" class="layui-input" th:value="${user.account}">
-                </div>
-
-                <label class="search-label">性别</label>
-                <div class="search-input">
-                    <select name="sex">
-                        <option value=""></option>
-                        <option value="1" th:selected="${user.sex==1}">男</option>
-                        <option value="2" th:selected="${user.sex==2}">女</option>
-                    </select>
-                </div>
 
                 <button class="layui-btn  layui-btn-warm" lay-submit lay-filter="search"><i class="layui-icon"></i>查询</button>
-                <a href="/user/edit" type="button" class="layui-btn  layui-btn-normal"><i class="layui-icon"></i>新增</a>
             </div>
         </div>
         <input type="hidden" name="page" id="pg">

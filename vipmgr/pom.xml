@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>vipmgr</name>
-	<description>Demo project for Spring Boot</description>
+	<description>会员管理中心</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -23,6 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<argLine>-Dfile.encoding=UTF-8</argLine>
 	</properties>
 
 	<dependencies>
@@ -125,6 +126,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<!--增加jvm参数-->
+					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

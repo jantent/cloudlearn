@@ -24,7 +24,8 @@ public class UserServiceTest {
     public void testFindAll(){
         int page = 1;
         int limit = 10;
-        PageInfo<UserVo> pageInfo = userService.searchAll(page,limit);
+        UserVo userVo = new UserVo();
+        PageInfo<UserVo> pageInfo = userService.searchAll(page,limit,userVo);
         System.out.println(pageInfo);
     }
 }
