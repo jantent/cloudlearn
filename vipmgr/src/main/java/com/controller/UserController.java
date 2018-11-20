@@ -4,6 +4,7 @@ import com.domain.vo.UserVo;
 import com.github.pagehelper.PageInfo;
 import com.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @GetMapping(value = "")
+    public String index(Model model){
+        return "mgrindex";
+    }
 
     @GetMapping(value = "/list")
     public String list(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "10") int size, @Valid UserVo user) {

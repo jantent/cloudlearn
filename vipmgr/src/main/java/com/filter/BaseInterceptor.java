@@ -55,7 +55,7 @@ public class BaseInterceptor implements HandlerInterceptor {
                 request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, adminVo);
             }
         }
-        if (uri.startsWith("/admin") && !uri.startsWith("/admin/login") && null == adminVo ) {
+        if (uri.equals("/") && !uri.startsWith("/admin/login") && null == adminVo ) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
         }
