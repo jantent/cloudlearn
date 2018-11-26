@@ -1,0 +1,32 @@
+server:
+  port: 8500
+
+spring:
+  application:
+    name: mall
+  thymeleaf:
+      prefix: classpath:/templates/
+      check-template-location: true
+      suffix: .html
+      encoding: UTF-8
+      mode: HTML5
+      cache: false
+  profiles:
+    active: jdbc
+
+
+mybatis:
+  type-aliases-package: com.dao
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://server1:8100/eureka,http://server2:8200/eureka,http://server3:8300/eureka
+
+
